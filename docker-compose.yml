@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql:8.0.44 
+    container_name: sistema_produto_mysql_container
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'sistema_produto' 
+      MYSQL_ROOT_PASSWORD: 'rootpass'
+    ports:
+      - '7306:3306'
+    volumes:
+      - ./banco.sql:/docker-entrypoint-initdb.d/banco.sql

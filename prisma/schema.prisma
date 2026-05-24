@@ -1,0 +1,34 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  
+}
+
+model Customer {
+  id    String @id @default(uuid())
+  phone String @unique
+  menus Menu[]
+}
+
+model Menu {
+  id          String     @id @default(uuid())
+  customerId  String
+  customer    Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  sent        Boolean    @default(false)
+  name        String     @db.VarChar(255)
+  items       MenuItem[]
+  createdAt   DateTime   @default(now())
+}
+
+model MenuItem {
+  id          String   @id @default(uuid())
+  description String   @db.Text
+  price       Decimal  @db.Decimal()
+  available   Boolean  @default(true)
+  name        String   @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  menus       Menu[]
+}
