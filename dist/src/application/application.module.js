@@ -10,14 +10,15 @@ exports.ApplicationModule = void 0;
 const common_1 = require("@nestjs/common");
 const menuItems_application_1 = require("./applications/menuItems.application");
 const domain_module_1 = require("../domain/domain.module");
+const menu_application_1 = require("./applications/menu.application");
 let ApplicationModule = class ApplicationModule {
 };
 exports.ApplicationModule = ApplicationModule;
 exports.ApplicationModule = ApplicationModule = __decorate([
     (0, common_1.Module)({
         imports: [domain_module_1.DomainModule],
-        providers: [menuItems_application_1.MenuItemsApplication],
-        exports: [menuItems_application_1.MenuItemsApplication],
+        providers: [menuItems_application_1.MenuItemsApplication, menu_application_1.MenuApplication],
+        exports: [menuItems_application_1.MenuItemsApplication, menu_application_1.MenuApplication],
     })
 ], ApplicationModule);
 //# sourceMappingURL=application.module.js.map

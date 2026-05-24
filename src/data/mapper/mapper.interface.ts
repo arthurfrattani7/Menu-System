@@ -8,3 +8,13 @@ export type IMenuItem = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type IMenu = {
+  id?: string;
+  name: string;
+  sent: boolean;
+  customerId?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  items?: IMenuItem[];
+};

@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("./providers/db/prisma.service");
 const menuItems_repository_1 = require("./repositories/db/menuItems.repository");
 const mapper_module_1 = require("./mapper/mapper.module");
+const menu_repository_1 = require("./repositories/db/menu.repository");
 let DbModule = class DbModule {
 };
 exports.DbModule = DbModule;
@@ -18,8 +19,8 @@ exports.DbModule = DbModule = __decorate([
     (0, common_1.Global)(),
     (0, common_1.Module)({
         imports: [mapper_module_1.MapperRepositoryModule],
-        providers: [prisma_service_1.PrismaService, menuItems_repository_1.MenuItemRepository],
-        exports: [prisma_service_1.PrismaService, menuItems_repository_1.MenuItemRepository],
+        providers: [prisma_service_1.PrismaService, menuItems_repository_1.MenuItemRepository, menu_repository_1.MenuRepository],
+        exports: [prisma_service_1.PrismaService, menuItems_repository_1.MenuItemRepository, menu_repository_1.MenuRepository],
     })
 ], DbModule);
 //# sourceMappingURL=data.module.js.map

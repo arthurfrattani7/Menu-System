@@ -10,6 +10,7 @@ exports.PresentationModule = void 0;
 const common_1 = require("@nestjs/common");
 const menuItems_controller_1 = require("./controllers/menuItems.controller");
 const application_module_1 = require("../application/application.module");
+const menu_controller_1 = require("./controllers/menu.controller");
 let PresentationModule = class PresentationModule {
 };
 exports.PresentationModule = PresentationModule;
@@ -18,6 +19,7 @@ exports.PresentationModule = PresentationModule = __decorate([
         imports: [application_module_1.ApplicationModule],
         controllers: [
             menuItems_controller_1.MenuItemsController,
+            menu_controller_1.MenuController,
         ],
     })
 ], PresentationModule);

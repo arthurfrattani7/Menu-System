@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MapperRepository = void 0;
 const injectable_decorator_1 = require("@nestjs/common/decorators/core/injectable.decorator");
 const menuItemsModel_1 = require("../entity/menuItemsModel");
+const menuModel_1 = require("../entity/menuModel");
 let MapperRepository = class MapperRepository {
     menuItems(menuItems) {
         if (!menuItems)
@@ -21,6 +22,18 @@ let MapperRepository = class MapperRepository {
             createdAt: menuItems.createdAt,
             updatedAt: menuItems.updatedAt,
         }, menuItems.id);
+    }
+    menu(menu) {
+        if (!menu)
+            return null;
+        return new menuModel_1.Menu({
+            name: menu.name,
+            sent: menu.sent,
+            customerId: menu.customerId,
+            createdAt: menu.createdAt,
+            updatedAt: menu.updatedAt,
+            items: menu.items?.map((item) => this.menuItems(item)),
+        }, menu.id);
     }
 };
 exports.MapperRepository = MapperRepository;
