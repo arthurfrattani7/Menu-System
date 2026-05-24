@@ -9,23 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MenuDomain = void 0;
-const injectable_decorator_1 = require("@nestjs/common/decorators/core/injectable.decorator");
-const menu_repository_1 = require("../../data/repositories/db/menu.repository");
-let MenuDomain = class MenuDomain {
-    constructor(menuRepository) {
-        this.menuRepository = menuRepository;
-    }
-    async saveMenu(menu) {
-        return this.menuRepository.createMenu(menu);
-    }
-    async addItemsToMenu(menuId, itemIds) {
-        return await this.menuRepository.addItemsToMenu(menuId, itemIds);
-    }
-};
-exports.MenuDomain = MenuDomain;
-exports.MenuDomain = MenuDomain = __decorate([
-    (0, injectable_decorator_1.Injectable)(),
-    __metadata("design:paramtypes", [menu_repository_1.MenuRepository])
-], MenuDomain);
-//# sourceMappingURL=menu.domain.js.map
+exports.AddItemsToMenuDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
+const class_validator_1 = require("class-validator");
+class AddItemsToMenuDto {
+}
+exports.AddItemsToMenuDto = AddItemsToMenuDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        example: ["id-da-heineken-aqui", "id-da-amstel-aqui"],
+        description: "Lista de UUIDs dos itens que serão injetados neste cardápio volátil",
+        type: [String],
+    }),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    __metadata("design:type", Array)
+], AddItemsToMenuDto.prototype, "itemIds", void 0);
+//# sourceMappingURL=addItemsToMenu.request.dto.js.map

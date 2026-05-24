@@ -9,4 +9,8 @@ export class MenuDomain {
   async saveMenu(menu: Menu): Promise<Menu> {
     return this.menuRepository.createMenu(menu);
   }
+
+  async addItemsToMenu(menuId: string, itemIds: string[]): Promise<Menu> {
+    return await this.menuRepository.addItemsToMenu(menuId, itemIds);
+  }
 }

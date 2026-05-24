@@ -21,12 +21,30 @@ export class MenuRepository {
         id: true,
         name: true,
         customerId: true,
-        sent: true,     
+        sent: true,
         createdAt: true,
         updatedAt: true,
       },
     });
 
     return this.mapper.menu(menuDB);
+  }
+
+  async addItemsToMenu(menuId: string, itemIds: string[]): Promise<Menu> {
+    const updatedMenuDB = await this.db.menu.update({
+      where: {
+        id: menuId,
+      },
+      data: {
+        items: {
+          connect: itemIds.map((itemId) => ({ id: itemId })),
+        },
+      },
+      include: {
+        items: true,
+      },
+    });
+
+    return this.mapper.menu(updatedMenuDB);
   }
 }

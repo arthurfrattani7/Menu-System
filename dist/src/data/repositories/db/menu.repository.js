@@ -36,6 +36,22 @@ let MenuRepository = class MenuRepository {
         });
         return this.mapper.menu(menuDB);
     }
+    async addItemsToMenu(menuId, itemIds) {
+        const updatedMenuDB = await this.db.menu.update({
+            where: {
+                id: menuId,
+            },
+            data: {
+                items: {
+                    connect: itemIds.map((itemId) => ({ id: itemId })),
+                },
+            },
+            include: {
+                items: true,
+            },
+        });
+        return this.mapper.menu(updatedMenuDB);
+    }
 };
 exports.MenuRepository = MenuRepository;
 exports.MenuRepository = MenuRepository = __decorate([

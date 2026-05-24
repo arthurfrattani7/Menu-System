@@ -9,23 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MenuDomain = void 0;
-const injectable_decorator_1 = require("@nestjs/common/decorators/core/injectable.decorator");
-const menu_repository_1 = require("../../data/repositories/db/menu.repository");
-let MenuDomain = class MenuDomain {
-    constructor(menuRepository) {
-        this.menuRepository = menuRepository;
-    }
-    async saveMenu(menu) {
-        return this.menuRepository.createMenu(menu);
-    }
-    async addItemsToMenu(menuId, itemIds) {
-        return await this.menuRepository.addItemsToMenu(menuId, itemIds);
-    }
-};
-exports.MenuDomain = MenuDomain;
-exports.MenuDomain = MenuDomain = __decorate([
-    (0, injectable_decorator_1.Injectable)(),
-    __metadata("design:paramtypes", [menu_repository_1.MenuRepository])
-], MenuDomain);
-//# sourceMappingURL=menu.domain.js.map
+exports.MenuWithItemsDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
+const menu_dto_1 = require("./menu.dto");
+const menuItems_dto_1 = require("./menuItems.dto");
+class MenuWithItemsDto extends menu_dto_1.MenuDto {
+}
+exports.MenuWithItemsDto = MenuWithItemsDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        type: [menuItems_dto_1.MenuItemsDto],
+        description: 'Lista de bebidas detalhadas vinculadas a este cardápio específico',
+    }),
+    __metadata("design:type", Array)
+], MenuWithItemsDto.prototype, "items", void 0);
+//# sourceMappingURL=menuWithItems.dto.js.map

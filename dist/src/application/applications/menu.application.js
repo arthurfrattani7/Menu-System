@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const menu_domain_1 = require("../../domain/services/menu.domain");
 const menuModel_1 = require("../../data/entity/menuModel");
 const manu_mapping_1 = require("../mapping/manu.mapping");
+const menuWithItems_mapping_1 = require("../mapping/menuWithItems.mapping");
 let MenuApplication = class MenuApplication {
     constructor(menuDomain) {
         this.menuDomain = menuDomain;
@@ -28,6 +29,10 @@ let MenuApplication = class MenuApplication {
         });
         const createdMenu = await this.menuDomain.saveMenu(menu);
         return (0, manu_mapping_1.mapMenuToDto)(createdMenu);
+    }
+    async addItemsToMenu(menuId, itemIds) {
+        const updatedMenu = await this.menuDomain.addItemsToMenu(menuId, itemIds);
+        return (0, menuWithItems_mapping_1.mapMenuToWithItemsDto)(updatedMenu);
     }
 };
 exports.MenuApplication = MenuApplication;

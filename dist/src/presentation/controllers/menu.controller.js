@@ -18,12 +18,17 @@ const swagger_1 = require("@nestjs/swagger");
 const menu_application_1 = require("../../application/applications/menu.application");
 const menu_dto_1 = require("../response/menuItems/menu.dto");
 const menu_request_dto_1 = require("../request/menu.request.dto");
+const addItemsToMenu_request_dto_1 = require("../request/addItemsToMenu.request.dto");
+const menuWithItems_dto_1 = require("../response/menuItems/menuWithItems.dto");
 let MenuController = class MenuController {
     constructor(menuApplication) {
         this.menuApplication = menuApplication;
     }
     async createMenu(body) {
         return await this.menuApplication.saveMenu(body);
+    }
+    async addItems(id, body) {
+        return await this.menuApplication.addItemsToMenu(id, body.itemIds);
     }
 };
 exports.MenuController = MenuController;
@@ -43,6 +48,23 @@ __decorate([
     __metadata("design:paramtypes", [menu_request_dto_1.CreateMenuRequestDto]),
     __metadata("design:returntype", Promise)
 ], MenuController.prototype, "createMenu", null);
+__decorate([
+    (0, common_1.Post)(":id/items"),
+    (0, swagger_1.ApiOperation)({
+        summary: "Adicionar bebidas existentes a um cardápio",
+        description: "Vincula uma lista de MenuItems (IDs) a um cardápio específico gerado para um cliente.",
+    }),
+    (0, swagger_1.ApiBody)({ type: addItemsToMenu_request_dto_1.AddItemsToMenuDto }),
+    (0, swagger_1.ApiCreatedResponse)({
+        description: "Itens vinculados com sucesso ao cardápio.",
+        type: menuWithItems_dto_1.MenuWithItemsDto,
+    }),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, addItemsToMenu_request_dto_1.AddItemsToMenuDto]),
+    __metadata("design:returntype", Promise)
+], MenuController.prototype, "addItems", null);
 exports.MenuController = MenuController = __decorate([
     (0, common_1.Controller)("menus"),
     (0, swagger_1.ApiTags)("Menus"),

@@ -6,4 +6,5 @@ export declare class MenuRepository {
     private readonly mapper;
     constructor(db: PrismaService, mapper: MapperRepository);
     createMenu(menu: Menu): Promise<Menu>;
+    addItemsToMenu(menuId: string, itemIds: string[]): Promise<Menu>;
 }
