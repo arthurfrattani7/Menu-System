@@ -8,20 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MapperRepository = void 0;
 const injectable_decorator_1 = require("@nestjs/common/decorators/core/injectable.decorator");
-const menuItemsModel_1 = require("../entity/menuItemsModel");
 let MapperRepository = class MapperRepository {
-    menuItems(menuItems) {
-        if (!menuItems)
-            return null;
-        return new menuItemsModel_1.MenuItem({
-            name: menuItems.name,
-            description: menuItems.description,
-            price: menuItems.price.toNumber(),
-            available: true,
-            createdAt: menuItems.createdAt,
-            updatedAt: menuItems.updatedAt,
-        }, menuItems.id);
-    }
 };
 exports.MapperRepository = MapperRepository;
 exports.MapperRepository = MapperRepository = __decorate([

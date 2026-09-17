@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DomainModule = void 0;
 const common_1 = require("@nestjs/common");
-const menuItems_domain_1 = require("./services/menuItems.domain");
 const data_module_1 = require("../data/data.module");
 let DomainModule = class DomainModule {
 };
@@ -16,8 +15,8 @@ exports.DomainModule = DomainModule;
 exports.DomainModule = DomainModule = __decorate([
     (0, common_1.Module)({
         imports: [data_module_1.DbModule],
-        providers: [menuItems_domain_1.MenuItemsDomain],
-        exports: [menuItems_domain_1.MenuItemsDomain],
+        providers: [],
+        exports: [],
     })
 ], DomainModule);
 //# sourceMappingURL=domain.module.js.map
