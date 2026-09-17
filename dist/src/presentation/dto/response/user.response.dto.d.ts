@@ -1,7 +1,6 @@
-export type UserMapperI = {
+export declare class UserResponseDto {
     id: string;
     name: string;
     email: string;
-    password: string;
     createdAt: Date;
-};
+}

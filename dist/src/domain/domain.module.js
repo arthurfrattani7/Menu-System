@@ -9,14 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DomainModule = void 0;
 const common_1 = require("@nestjs/common");
 const data_module_1 = require("../data/data.module");
+const userDomain_1 = require("./services/userDomain");
 let DomainModule = class DomainModule {
 };
 exports.DomainModule = DomainModule;
 exports.DomainModule = DomainModule = __decorate([
     (0, common_1.Module)({
         imports: [data_module_1.DbModule],
-        providers: [],
-        exports: [],
+        providers: [userDomain_1.UserDomain],
+        exports: [userDomain_1.UserDomain],
     })
 ], DomainModule);
 //# sourceMappingURL=domain.module.js.map

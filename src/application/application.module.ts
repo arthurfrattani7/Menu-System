@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { MenuItemsApplication } from './applications/menuItems.application';
+import { UserApplication } from './applications/user.application';
 import { DomainModule } from '../domain/domain.module';
 
 @Module({
   imports: [DomainModule],
-  providers: [MenuItemsApplication],
-  exports: [MenuItemsApplication],
+  providers: [UserApplication],
+  exports: [UserApplication],
 })
 export class ApplicationModule {}

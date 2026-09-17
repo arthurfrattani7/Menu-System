@@ -8,7 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MapperRepository = void 0;
 const injectable_decorator_1 = require("@nestjs/common/decorators/core/injectable.decorator");
+const userModel_1 = require("../entity/userModel");
 let MapperRepository = class MapperRepository {
+    user(user) {
+        return new userModel_1.User({
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            createdAt: user.createdAt,
+        }, user.id);
+    }
 };
 exports.MapperRepository = MapperRepository;
 exports.MapperRepository = MapperRepository = __decorate([
