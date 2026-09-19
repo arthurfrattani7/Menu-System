@@ -6,54 +6,52 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Artist {
-  id     String  @id @default(uuid())
-  name   String
-  albums Album[]
-}
-
-model Album {
-  id       String  @id @default(uuid())
-  name     String
-  artist   Artist? @relation(fields: [artistId], references: [id])
-  artistId String?
-
-  music Music[]
-}
-
-model Music {
-  id       String       @id @default(uuid())
-  name     String
-  album    Album?       @relation(fields: [albumId], references: [id])
-  albumId  String?
-  audios   MusicAudio[]
-  images   MusicImage[]
-}
-
-model MusicAudio {
-  id        String   @id @default(uuid())
-  name      String
-  url       String
-  duration  Int?
-  music     Music    @relation(fields: [musicId], references: [id], onDelete: Cascade)
-  musicId   String
-  createdAt DateTime @default(now())
-}
-
-model MusicImage {
-  id        String   @id @default(uuid())
-  name      String?
-  url       String
-  music     Music    @relation(fields: [musicId], references: [id], onDelete: Cascade)
-  musicId   String
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
-}
-
 model User {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
   password  String
+  createdAt DateTime @default(now())
+
+  coupleAsUserOne Couple? @relation("CoupleUserOne")
+  coupleAsUserTwo Couple? @relation("CoupleUserTwo")
+}
+
+model Couple {
+  id        String   @id @default(uuid())
+  userOne   User     @relation("CoupleUserOne", fields: [userOneId], references: [id])
+  userOneId String   @unique
+  userTwo   User     @relation("CoupleUserTwo", fields: [userTwoId], references: [id])
+  userTwoId String   @unique
+  createdAt DateTime @default(now())
+
+  pages Page[]
+}
+
+model Page {
+  id        String   @id @default(uuid())
+  couple    Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  coupleId  String
+  order     Int
+  music     Music?   @relation(fields: [musicId], references: [id])
+  musicId   String?
+  photos    Photo[]
+  createdAt DateTime @default(now())
+}
+
+model Music {
+  id     String @id @default(uuid())
+  name   String
+  artist String
+  url    String
+  pages  Page[]
+}
+
+model Photo {
+  id        String   @id @default(uuid())
+  url       String
+  sortOrder Int      @default(0)
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  pageId    String
   createdAt DateTime @default(now())
 }

@@ -9,13 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PresentationModule = void 0;
 const common_1 = require("@nestjs/common");
 const application_module_1 = require("../application/application.module");
+const user_controller_1 = require("./controllers/user.controller");
+const couple_controller_1 = require("./controllers/couple.controller");
 let PresentationModule = class PresentationModule {
 };
 exports.PresentationModule = PresentationModule;
 exports.PresentationModule = PresentationModule = __decorate([
     (0, common_1.Module)({
         imports: [application_module_1.ApplicationModule],
-        controllers: [],
+        controllers: [user_controller_1.UserController, couple_controller_1.CoupleController],
     })
 ], PresentationModule);
 //# sourceMappingURL=presentation.module.js.map

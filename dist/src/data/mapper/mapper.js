@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MapperRepository = void 0;
 const injectable_decorator_1 = require("@nestjs/common/decorators/core/injectable.decorator");
 const userModel_1 = require("../entity/userModel");
+const coupleModel_1 = require("../entity/coupleModel");
 let MapperRepository = class MapperRepository {
     user(user) {
         return new userModel_1.User({
@@ -17,6 +18,13 @@ let MapperRepository = class MapperRepository {
             password: user.password,
             createdAt: user.createdAt,
         }, user.id);
+    }
+    couple(couple) {
+        return new coupleModel_1.Couple({
+            userOneId: couple.userOneId,
+            userTwoId: couple.userTwoId,
+            createdAt: couple.createdAt,
+        }, couple.id);
     }
 };
 exports.MapperRepository = MapperRepository;

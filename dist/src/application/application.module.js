@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_application_1 = require("./applications/user.application");
+const couple_application_1 = require("./applications/couple.application");
 const domain_module_1 = require("../domain/domain.module");
 let ApplicationModule = class ApplicationModule {
 };
@@ -16,8 +17,8 @@ exports.ApplicationModule = ApplicationModule;
 exports.ApplicationModule = ApplicationModule = __decorate([
     (0, common_1.Module)({
         imports: [domain_module_1.DomainModule],
-        providers: [user_application_1.UserApplication],
-        exports: [user_application_1.UserApplication],
+        providers: [user_application_1.UserApplication, couple_application_1.CoupleApplication],
+        exports: [user_application_1.UserApplication, couple_application_1.CoupleApplication],
     })
 ], ApplicationModule);
 //# sourceMappingURL=application.module.js.map

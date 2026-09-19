@@ -5,3 +5,9 @@ export type UserMapperI = {
     password: string;
     createdAt: Date;
 };
+export type CoupleMapperI = {
+    id: string;
+    userOneId: string;
+    userTwoId: string;
+    createdAt: Date;
+};

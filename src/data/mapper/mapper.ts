@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
 import { User } from "../entity/userModel";
-import { UserMapperI } from "./mapper.interface";
+import { Couple } from "../entity/coupleModel";
+import { CoupleMapperI, UserMapperI } from "./mapper.interface";
 
 @Injectable()
 export class MapperRepository {
@@ -13,6 +14,17 @@ export class MapperRepository {
                 createdAt: user.createdAt,
             },
             user.id,
+        );
+    }
+
+    couple(couple: CoupleMapperI): Couple {
+        return new Couple(
+            {
+                userOneId: couple.userOneId,
+                userTwoId: couple.userTwoId,
+                createdAt: couple.createdAt,
+            },
+            couple.id,
         );
     }
 }
