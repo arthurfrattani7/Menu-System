@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
 import { User } from "../entity/userModel";
 import { Couple } from "../entity/coupleModel";
-import { CoupleMapperI, UserMapperI } from "./mapper.interface";
+import { CoupleMapperI, MusicMapperI, UserMapperI } from "./mapper.interface";
+import { Music } from "../entity/musicModel";
 
 @Injectable()
 export class MapperRepository {
@@ -25,6 +26,18 @@ export class MapperRepository {
                 createdAt: couple.createdAt,
             },
             couple.id,
+        );
+    }
+
+    music(music: MusicMapperI): Music {
+        return new Music(
+            {
+                name: music.name,
+                artist: music.artist,
+                url: music.url,
+                createdAt: music.createdAt,
+            },
+            music.id,
         );
     }
 }

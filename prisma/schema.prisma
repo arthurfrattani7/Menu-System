@@ -40,11 +40,12 @@ model Page {
 }
 
 model Music {
-  id     String @id @default(uuid())
-  name   String
-  artist String
-  url    String
-  pages  Page[]
+  id        String   @id @default(uuid())
+  name      String
+  artist    String
+  url       String
+  createdAt DateTime @default(now())
+  pages     Page[]
 }
 
 model Photo {

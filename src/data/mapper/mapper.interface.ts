@@ -12,3 +12,11 @@ export type CoupleMapperI = {
   userTwoId: string;
   createdAt: Date;
 };
+
+export type MusicMapperI = {
+  id: string;
+  name: string;
+  artist: string;
+  url: string;
+  createdAt: Date;
+};

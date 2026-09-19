@@ -3,12 +3,16 @@ import { Couple } from "../../data/entity/coupleModel";
 import { CoupleDomain } from "../../domain/services/coupleDomain";
 import { IRegisterCoupleApplication } from "../interfaces/IRegisterCouple.application";
 import { BadRequestException } from "@nestjs/common/exceptions";
+import { CoupleResponseDto } from "../../presentation/dto/response/couple.response.dto";
+import { mapCoupleToCoupleMapperDto } from "../mapping/couple.mapping";
 
 @Injectable()
 export class CoupleApplication {
   constructor(private readonly coupleDomain: CoupleDomain) {}
 
-  async createCouple(data: IRegisterCoupleApplication): Promise<Couple> {
+  async createCouple(
+    data: IRegisterCoupleApplication,
+  ): Promise<CoupleResponseDto> {
     if (data.userOneId === data.userTwoId) {
       throw new BadRequestException(
         "Um casal precisa de dois usuários diferentes",
@@ -21,22 +25,25 @@ export class CoupleApplication {
       createdAt: new Date(),
     });
 
-    return this.coupleDomain.createCouple(couple);
+    const createdCouple = await this.coupleDomain.createCouple(couple);
+    return mapCoupleToCoupleMapperDto(createdCouple);
   }
 
-  async getCoupleById(id: string): Promise<Couple> {
+  async getCoupleById(id: string): Promise<CoupleResponseDto> {
     if (!id) {
       throw new BadRequestException("ID Não Encontrado");
     }
 
-    return this.coupleDomain.getCoupleById(id);
+    const couple = await this.coupleDomain.getCoupleById(id);
+    return mapCoupleToCoupleMapperDto(couple);
   }
 
-  async getCoupleByUserId(userId: string): Promise<Couple> {
+  async getCoupleByUserId(userId: string): Promise<CoupleResponseDto> {
     if (!userId) {
       throw new BadRequestException("ID Não Encontrado");
     }
 
-    return this.coupleDomain.getCoupleByUserId(userId);
+    const couple = await this.coupleDomain.getCoupleByUserId(userId);
+    return mapCoupleToCoupleMapperDto(couple);
   }
 }

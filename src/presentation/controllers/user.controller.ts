@@ -12,14 +12,7 @@ export class UserController {
   @Post()
   @ApiCreatedResponse({ type: UserResponseDto })
   async createUser(@Body() data: UserRequestDto): Promise<UserResponseDto> {
-    const user = await this.userApplication.createUser(data);
-
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      createdAt: user.createdAt,
-    };
+    return this.userApplication.createUser(data);
   }
 
   @Get(":id")
