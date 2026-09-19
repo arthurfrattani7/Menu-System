@@ -20,3 +20,11 @@ export type MusicMapperI = {
   url: string;
   createdAt: Date;
 };
+
+export type PageMapperI = {
+  id: string;
+  coupleId: string;
+  order: number;
+  musicId: string | null;
+  createdAt: Date;
+};
