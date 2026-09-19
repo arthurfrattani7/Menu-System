@@ -11,12 +11,12 @@ export class UserDomain {
     return createdUser;
   }
 
-  async getUserById(id: string): Promise<User> {
+  async getUserById(id: string): Promise<User | null> {
     const user = await this.userRepository.getUserById(id);
     return user;
   }
 
-  async getUserByEmail(email: string): Promise<User> {
+  async getUserByEmail(email: string): Promise<User | null> {
     const user = await this.userRepository.getUserByEmail(email);
     return user;
   }

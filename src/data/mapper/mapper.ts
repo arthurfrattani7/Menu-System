@@ -6,7 +6,11 @@ import { Music } from "../entity/musicModel";
 
 @Injectable()
 export class MapperRepository {
-    user(user: UserMapperI): User {
+    user(user: UserMapperI | null): User | null {
+        if (!user) {
+            return null;
+        }
+
         return new User(
             {
                 name: user.name,

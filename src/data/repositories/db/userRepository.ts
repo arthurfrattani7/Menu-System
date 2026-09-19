@@ -21,7 +21,7 @@ export class UserRepository {
     return this.mapper.user(createdUser);
   }
 
-  async getUserById(id: string): Promise<User> {
+  async getUserById(id: string): Promise<User | null> {
     const user = await this.db.user.findUnique({
       where: {
         id: id,
@@ -30,7 +30,7 @@ export class UserRepository {
     return this.mapper.user(user);
   }
 
-  async getUserByEmail(email: string): Promise<User> {
+  async getUserByEmail(email: string): Promise<User | null> {
     const user = await this.db.user.findUnique({
       where: {
         email: email,
