@@ -28,3 +28,13 @@ export type PageMapperI = {
   musicId: string | null;
   createdAt: Date;
 };
+
+export type PhotoMapperI = {
+  id: string;
+  url: string;
+  sortOrder: number;
+  pageId: string;
+  createdAt: Date;
+};
+
+export type VideoMapperI = PhotoMapperI;

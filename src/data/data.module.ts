@@ -5,6 +5,9 @@ import { UserRepository } from './repositories/db/userRepository';
 import { CoupleRepository } from './repositories/db/coupleRepository';
 import { MusicRepository } from './repositories/db/musicRepository';
 import { PageRepository } from './repositories/db/pageRepository';
+import { PhotoRepository } from './repositories/db/photoRepository';
+import { VideoRepository } from './repositories/db/videoRepository';
+import { StorageService } from './providers/storage/storage.service';
 
 @Global()
 @Module({
@@ -15,6 +18,9 @@ import { PageRepository } from './repositories/db/pageRepository';
     CoupleRepository,
     MusicRepository,
     PageRepository,
+    PhotoRepository,
+    VideoRepository,
+    StorageService,
   ],
   exports: [
     PrismaService,
@@ -22,6 +28,9 @@ import { PageRepository } from './repositories/db/pageRepository';
     CoupleRepository,
     MusicRepository,
     PageRepository,
+    PhotoRepository,
+    VideoRepository,
+    StorageService,
   ],
 })
 export class DbModule {}

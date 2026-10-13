@@ -5,18 +5,51 @@ import {
 } from "@nestjs/common/exceptions";
 import { Page } from "../../data/entity/pageModel";
 import { PageDomain } from "../../domain/services/pageDomain";
+import { MusicDomain } from "../../domain/services/musicDomain";
 import { IRegisterPageApplication } from "../interfaces/IRegisterPage.application";
 import { PageResponseDto } from "../../presentation/dto/response/page.response.dto";
-import { mapPageToPageMapperDto } from "../mapping/page.mapping";
+import {
+  mapPageBookToPageBookDto,
+  mapPageToPageMapperDto,
+} from "../mapping/page.mapping";
+import { PageBookResponseDto } from "../../presentation/dto/response/page-book.response.dto";
+import { CoupleAccess } from "../authorization/couple-access";
 
 @Injectable()
 export class PageApplication {
-  constructor(private readonly pageDomain: PageDomain) {}
+  constructor(
+    private readonly pageDomain: PageDomain,
+    private readonly musicDomain: MusicDomain,
+    private readonly coupleAccess: CoupleAccess,
+  ) {}
 
-  async createPage(data: IRegisterPageApplication): Promise<PageResponseDto> {
+  async setPageMusic(
+    userId: string,
+    id: string,
+    musicId: string | null,
+  ): Promise<PageResponseDto> {
+    await this.coupleAccess.assertCanAccessPage(userId, id);
+
+    if (musicId) {
+      const music = await this.musicDomain.getMusicById(musicId);
+      if (!music) {
+        throw new NotFoundException("Música não encontrada");
+      }
+    }
+
+    const updatedPage = await this.pageDomain.updatePageMusic(id, musicId);
+    return mapPageToPageMapperDto(updatedPage);
+  }
+
+  async createPage(
+    userId: string,
+    data: IRegisterPageApplication,
+  ): Promise<PageResponseDto> {
     if (!data.coupleId) {
       throw new BadRequestException("Casal Não Encontrado");
     }
+
+    await this.coupleAccess.assertUserInCouple(userId, data.coupleId);
 
     const page = new Page({
       coupleId: data.coupleId,
@@ -29,23 +62,38 @@ export class PageApplication {
     return mapPageToPageMapperDto(createdPage);
   }
 
-  async getPageById(id: string): Promise<PageResponseDto> {
+  async getPageById(userId: string, id: string): Promise<PageResponseDto> {
     if (!id) {
       throw new BadRequestException("ID Não Encontrado");
     }
 
-    const page = await this.pageDomain.getPageById(id);
-    if (!page) {
-      throw new NotFoundException("Página não encontrada");
-    }
-
+    const page = await this.coupleAccess.assertCanAccessPage(userId, id);
     return mapPageToPageMapperDto(page);
   }
 
-  async getPagesByCoupleId(coupleId: string): Promise<PageResponseDto[]> {
+  async getBookByCoupleId(
+    userId: string,
+    coupleId: string,
+  ): Promise<PageBookResponseDto[]> {
     if (!coupleId) {
       throw new BadRequestException("ID Não Encontrado");
     }
+
+    await this.coupleAccess.assertUserInCouple(userId, coupleId);
+
+    const book = await this.pageDomain.getBookByCoupleId(coupleId);
+    return book.map(mapPageBookToPageBookDto);
+  }
+
+  async getPagesByCoupleId(
+    userId: string,
+    coupleId: string,
+  ): Promise<PageResponseDto[]> {
+    if (!coupleId) {
+      throw new BadRequestException("ID Não Encontrado");
+    }
+
+    await this.coupleAccess.assertUserInCouple(userId, coupleId);
 
     const pages = await this.pageDomain.getPagesByCoupleId(coupleId);
     return pages.map(mapPageToPageMapperDto);

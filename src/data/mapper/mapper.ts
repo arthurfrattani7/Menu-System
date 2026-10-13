@@ -5,10 +5,14 @@ import {
   CoupleMapperI,
   MusicMapperI,
   PageMapperI,
+  PhotoMapperI,
   UserMapperI,
+  VideoMapperI,
 } from "./mapper.interface";
 import { Music } from "../entity/musicModel";
 import { Page } from "../entity/pageModel";
+import { Photo } from "../entity/photoModel";
+import { Video } from "../entity/videoModel";
 
 @Injectable()
 export class MapperRepository {
@@ -28,7 +32,11 @@ export class MapperRepository {
         );
     }
 
-    couple(couple: CoupleMapperI): Couple {
+    couple(couple: CoupleMapperI | null): Couple | null {
+        if (!couple) {
+            return null;
+        }
+
         return new Couple(
             {
                 userOneId: couple.userOneId,
@@ -39,7 +47,11 @@ export class MapperRepository {
         );
     }
 
-    music(music: MusicMapperI): Music {
+    music(music: MusicMapperI | null): Music | null {
+        if (!music) {
+            return null;
+        }
+
         return new Music(
             {
                 name: music.name,
@@ -64,6 +76,30 @@ export class MapperRepository {
                 createdAt: page.createdAt,
             },
             page.id,
+        );
+    }
+
+    photo(photo: PhotoMapperI): Photo {
+        return new Photo(
+            {
+                url: photo.url,
+                sortOrder: photo.sortOrder,
+                pageId: photo.pageId,
+                createdAt: photo.createdAt,
+            },
+            photo.id,
+        );
+    }
+
+    video(video: VideoMapperI): Video {
+        return new Video(
+            {
+                url: video.url,
+                sortOrder: video.sortOrder,
+                pageId: video.pageId,
+                createdAt: video.createdAt,
+            },
+            video.id,
         );
     }
 }

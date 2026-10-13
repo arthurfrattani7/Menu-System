@@ -36,6 +36,7 @@ model Page {
   music     Music?   @relation(fields: [musicId], references: [id])
   musicId   String?
   photos    Photo[]
+  videos    Video[]
   createdAt DateTime @default(now())
 }
 
@@ -49,6 +50,15 @@ model Music {
 }
 
 model Photo {
+  id        String   @id @default(uuid())
+  url       String
+  sortOrder Int      @default(0)
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  pageId    String
+  createdAt DateTime @default(now())
+}
+
+model Video {
   id        String   @id @default(uuid())
   url       String
   sortOrder Int      @default(0)
