@@ -7,6 +7,7 @@ import { Page } from "../../data/entity/pageModel";
 import { PageDomain } from "../../domain/services/pageDomain";
 import { MusicDomain } from "../../domain/services/musicDomain";
 import { IRegisterPageApplication } from "../interfaces/IRegisterPage.application";
+import { IUpdatePageTimingApplication } from "../interfaces/IUpdatePageTiming.application";
 import { PageResponseDto } from "../../presentation/dto/response/page.response.dto";
 import {
   mapPageBookToPageBookDto,
@@ -14,6 +15,8 @@ import {
 } from "../mapping/page.mapping";
 import { PageBookResponseDto } from "../../presentation/dto/response/page-book.response.dto";
 import { CoupleAccess } from "../authorization/couple-access";
+
+const MAX_DURATION_SECONDS = 3600;
 
 @Injectable()
 export class PageApplication {
@@ -41,6 +44,48 @@ export class PageApplication {
     return mapPageToPageMapperDto(updatedPage);
   }
 
+  async updatePageTiming(
+    userId: string,
+    id: string,
+    data: IUpdatePageTimingApplication,
+  ): Promise<PageResponseDto> {
+    await this.coupleAccess.assertCanAccessPage(userId, id);
+
+    this.validateTiming(data.durationSeconds, data.musicStartSeconds);
+
+    const updatedPage = await this.pageDomain.updatePageTiming(id, {
+      durationSeconds: data.durationSeconds,
+      musicStartSeconds: data.musicStartSeconds,
+    });
+    return mapPageToPageMapperDto(updatedPage);
+  }
+
+  private validateTiming(
+    durationSeconds: number | null | undefined,
+    musicStartSeconds: number | undefined,
+  ): void {
+    // undefined = não informado, null = sem limite (ambos válidos)
+    if (
+      durationSeconds != null &&
+      (!Number.isInteger(durationSeconds) ||
+        durationSeconds < 1 ||
+        durationSeconds > MAX_DURATION_SECONDS)
+    ) {
+      throw new BadRequestException(
+        `A duração precisa ser um inteiro entre 1 e ${MAX_DURATION_SECONDS} segundos, ou null para não ter limite`,
+      );
+    }
+
+    if (
+      musicStartSeconds !== undefined &&
+      (!Number.isInteger(musicStartSeconds) || musicStartSeconds < 0)
+    ) {
+      throw new BadRequestException(
+        "O início da música precisa ser um inteiro maior ou igual a 0",
+      );
+    }
+  }
+
   async createPage(
     userId: string,
     data: IRegisterPageApplication,
@@ -51,10 +96,18 @@ export class PageApplication {
 
     await this.coupleAccess.assertUserInCouple(userId, data.coupleId);
 
+    // Omitido = 15s padrão; null = sem limite de tempo
+    const durationSeconds =
+      data.durationSeconds === undefined ? 15 : data.durationSeconds;
+    const musicStartSeconds = data.musicStartSeconds ?? 0;
+    this.validateTiming(durationSeconds, musicStartSeconds);
+
     const page = new Page({
       coupleId: data.coupleId,
       order: data.order,
       musicId: data.musicId ?? null,
+      durationSeconds: durationSeconds,
+      musicStartSeconds: musicStartSeconds,
       createdAt: new Date(),
     });
 

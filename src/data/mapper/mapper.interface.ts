@@ -26,6 +26,8 @@ export type PageMapperI = {
   coupleId: string;
   order: number;
   musicId: string | null;
+  durationSeconds: number | null;
+  musicStartSeconds: number;
   createdAt: Date;
 };
 

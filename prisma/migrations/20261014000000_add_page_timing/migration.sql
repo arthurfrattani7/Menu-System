@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Page` ADD COLUMN `durationSeconds` INTEGER NULL DEFAULT 15,
+    ADD COLUMN `musicStartSeconds` INTEGER NOT NULL DEFAULT 0;

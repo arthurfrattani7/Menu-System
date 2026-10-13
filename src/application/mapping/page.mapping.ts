@@ -21,6 +21,8 @@ export function mapPageToPageMapperDto(dto: Page): PageResponseDto {
     coupleId: dto.coupleId,
     order: dto.order,
     musicId: dto.musicId,
+    durationSeconds: dto.durationSeconds,
+    musicStartSeconds: dto.musicStartSeconds,
     createdAt: dto.createdAt,
   };
 }

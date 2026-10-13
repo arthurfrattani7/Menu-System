@@ -29,15 +29,19 @@ model Couple {
 }
 
 model Page {
-  id        String   @id @default(uuid())
-  couple    Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
-  coupleId  String
-  order     Int
-  music     Music?   @relation(fields: [musicId], references: [id])
-  musicId   String?
-  photos    Photo[]
-  videos    Video[]
-  createdAt DateTime @default(now())
+  id                String   @id @default(uuid())
+  couple            Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  coupleId          String
+  order             Int
+  music             Music?   @relation(fields: [musicId], references: [id])
+  musicId           String?
+  // Tempo da página na tela, em segundos. null = sem limite (só passa manualmente)
+  durationSeconds   Int?     @default(15)
+  // Segundo da música em que o trecho da página começa
+  musicStartSeconds Int      @default(0)
+  photos            Photo[]
+  videos            Video[]
+  createdAt         DateTime @default(now())
 }
 
 model Music {

@@ -13,6 +13,15 @@ export class PageResponseDto {
   @ApiProperty({ nullable: true })
   musicId: string | null;
 
+  @ApiProperty({
+    nullable: true,
+    description: "Segundos na tela. null = sem limite (só passa manualmente)",
+  })
+  durationSeconds: number | null;
+
+  @ApiProperty({ description: "Segundo da música em que o trecho começa" })
+  musicStartSeconds: number;
+
   @ApiProperty()
   createdAt: Date;
 }

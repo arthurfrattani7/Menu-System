@@ -73,6 +73,8 @@ export class MapperRepository {
                 coupleId: page.coupleId,
                 order: page.order,
                 musicId: page.musicId,
+                durationSeconds: page.durationSeconds,
+                musicStartSeconds: page.musicStartSeconds,
                 createdAt: page.createdAt,
             },
             page.id,

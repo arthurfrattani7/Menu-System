@@ -21,6 +21,13 @@ export class PageDomain {
     return this.pageRepository.updatePageMusic(id, musicId);
   }
 
+  async updatePageTiming(
+    id: string,
+    timing: { durationSeconds?: number | null; musicStartSeconds?: number },
+  ): Promise<Page> {
+    return this.pageRepository.updatePageTiming(id, timing);
+  }
+
   async getBookByCoupleId(coupleId: string): Promise<PageBook[]> {
     return this.pageRepository.getBookByCoupleId(coupleId);
   }

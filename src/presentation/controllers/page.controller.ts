@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { PageMusicRequestDto } from "../dto/request/page-music.request.dto";
+import { PageTimingRequestDto } from "../dto/request/page-timing.request.dto";
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { PageApplication } from "../../application/applications/page.application";
 import { CurrentUserId } from "../auth/current-user.decorator";
@@ -28,6 +29,16 @@ export class PageController {
     @Param("id") id: string,
   ): Promise<PageResponseDto> {
     return this.pageApplication.getPageById(userId, id);
+  }
+
+  @Patch(":id")
+  @ApiOkResponse({ type: PageResponseDto })
+  async updatePageTiming(
+    @CurrentUserId() userId: string,
+    @Param("id") id: string,
+    @Body() data: PageTimingRequestDto,
+  ): Promise<PageResponseDto> {
+    return this.pageApplication.updatePageTiming(userId, id, data);
   }
 
   @Patch(":id/music")

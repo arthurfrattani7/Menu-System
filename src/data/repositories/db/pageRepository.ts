@@ -17,9 +17,22 @@ export class PageRepository {
         coupleId: page.coupleId,
         order: page.order,
         musicId: page.musicId,
+        durationSeconds: page.durationSeconds,
+        musicStartSeconds: page.musicStartSeconds,
       },
     });
     return this.mapper.page(createdPage);
+  }
+
+  async updatePageTiming(
+    id: string,
+    timing: { durationSeconds?: number | null; musicStartSeconds?: number },
+  ): Promise<Page> {
+    const page = await this.db.page.update({
+      where: { id: id },
+      data: timing,
+    });
+    return this.mapper.page(page);
   }
 
   async getPageById(id: string): Promise<Page | null> {
